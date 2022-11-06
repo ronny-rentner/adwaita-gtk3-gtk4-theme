@@ -1,0 +1,3 @@
+[submodule "libadwaita"]
+	path = libadwaita
+	url = https://gitlab.gnome.org/GNOME/libadwaita.git
