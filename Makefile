@@ -1,18 +1,16 @@
 .ONESHELL:
 .SHELLFLAGS += -e
 
-DIR       := ${CURDIR}
-BUILD_DIR := ${DIR}/build
-DEST_DIR  := ${DIR}/dest
+DIR         := ${CURDIR}
+BUILD_DIR   := ${DIR}/build
+TARGET_DIR  := ${DIR}/tmp/adwaita-gtk3-gtk4
+RELEASE_DIR := ${DIR}/releases
 
 update:
-	cd ${DIR}
 	git pull
-	#cd ${DIR}/libadwaita
-	#git pull
+	git submodule update --recursive --remote
 
 build:
-	cd ${DIR}
 	meson -Dprefix="/tmp/adwaita-gtk3-gtk4" build
 	ninja -C build install
 
@@ -26,6 +24,7 @@ all: update build buildgtk4
 .PHONY: clean
 clean:  cleangtk4
 	rm -rf "${BUILD_DIR}"
+	rm -rf "${TARGET_DIR}"
 
 .PHONY: cleangtk4
 cleangtk4:
