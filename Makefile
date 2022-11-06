@@ -1,17 +1,22 @@
 .ONESHELL:
 .SHELLFLAGS += -e
 
-DIR         := ${CURDIR}
-BUILD_DIR   := ${DIR}/build
-TARGET_DIR  := ${DIR}/target
-RELEASE_DIR := ${DIR}/releases
+DIR                  := ${CURDIR}
+BUILD_DIR            := ${DIR}/build
+TARGET_DIR           := ${DIR}/target
+TARGET_THEMES_DIR    := ${TARGET_DIR}/share/themes
+RELEASE_DIR          := ${DIR}/releases
+
 
 GTK4_DIR             := ${DIR}/libadwaita
 GTK4_BUILD_DIR       := ${GTK4_DIR}/_build
-GTK4_PATCH_DIR       := ${TARGET_DIR}/share/themes/adw-gtk3/gtk-4.0
+GTK4_PATCH_DIR       := ${TARGET_THEMES_DIR}/adw-gtk3/gtk-4.0
 GTK4_PATCH_SRC_DIR   := ${GTK4_BUILD_DIR}/src/stylesheet
-GTK4_DARK_PATCH_DIR  := ${TARGET_DIR}/share/themes/adw-gtk3-dark/gtk-4.0
+GTK4_DARK_PATCH_DIR  := ${TARGET_THEMES_DIR}/adw-gtk3-dark/gtk-4.0
 GTK4_ASSETS_DIR      :=  ${GTK4_DIR}/src/stylesheet/assets
+
+.PHONY: all clean build gtk4build gtk4patch release
+all: clean build gtk4build gtk4patch release
 
 update:
 	git pull
@@ -38,13 +43,14 @@ gtk4patch:
 	cp -R ${GTK4_ASSETS_DIR} ${GTK4_DARK_PATCH_DIR}
 	echo "@import 'defaults-dark.css';\n" |cat - ${GTK4_PATCH_SRC_DIR}/base.css >${GTK4_DARK_PATCH_DIR}/gtk.css
 
-all: update build buildgtk4
+release:
+	mkdir -p ${RELEASE_DIR}
+	cd ${TARGET_THEMES_DIR}
+	tar -zcvf ${RELEASE_DIR}/adw-gtk3-gtk4-$$(date '+%Y-%m-%d').tgz *
 
-.PHONY: clean
-clean:  cleangtk4
+clean:  gtk4clean
 	rm -rf "${TARGET_DIR}"
 	rm -rf "${BUILD_DIR}"
 
-.PHONY: cleangtk4
-cleangtk4:
+gtk4clean:
 	rm -rf ${DIR}/libadwaita/_build
