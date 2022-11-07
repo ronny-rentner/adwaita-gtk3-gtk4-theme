@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Build and release workflow
 
 on:
   push:
@@ -12,7 +12,12 @@ jobs:
       contents: write
   
     steps:
-    - uses: actions/checkout@v3
+    - name: Get current date
+      id: date
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+    - name: Checkout
+      uses: actions/checkout@v3
       with:
         submodules: recursive
 
@@ -25,15 +30,12 @@ jobs:
     - name: List artifacts
       run: ls -Rl releases target
 
-    - name: Store artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: tarball
-        path: releases/*.tgz
-          
     - name: Release
       uses: ncipollo/release-action@v1
       with:
+        name: ${{ github.event.repository.name }}--nightly-${{ steps.date.outputs.date }}
         artifacts: "releases/*.tgz"
-        tag: ${{ needs.setup_release.outputs.release_commit }}
-        prerelease: true
+        tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
+        prerelease: false
+        omitBody: true
+        artifactErrorsFailBuild: true
