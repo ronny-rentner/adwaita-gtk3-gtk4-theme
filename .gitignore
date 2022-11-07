@@ -1,5 +1,4 @@
-# Ignore Backup Copies from Text Editor
-*~
-
-# Ignore meson build directory
+*.swp
 build
+target
+releases
