@@ -30,15 +30,9 @@ jobs:
     - name: List artifacts
       run: ls -Rl releases target
 
-    - name: Store artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        path: releases/*.tgz
-          
     - name: Release
       uses: ncipollo/release-action@v1
       with:
         artifacts: "releases/*.tgz"
-        tag: nightly-${{ github.sha }}
+        tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
         prerelease: false
-        replacesArtifacts: false
