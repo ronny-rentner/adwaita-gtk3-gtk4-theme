@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Build and release workflow
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        name: nightly-${{ steps.date.outputs.date }}
+        name: ${{ github.event.repository.name }}--nightly-${{ steps.date.outputs.date }}
         artifacts: "releases/*.tgz"
         tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
         prerelease: false
