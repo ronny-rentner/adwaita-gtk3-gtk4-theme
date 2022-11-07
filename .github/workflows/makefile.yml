@@ -29,3 +29,5 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "releases/*.t?gz"
+        tag: nightly-${{ github.sha }}
+        prerelease: true
