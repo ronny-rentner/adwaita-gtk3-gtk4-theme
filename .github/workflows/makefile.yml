@@ -37,3 +37,4 @@ jobs:
         tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
         prerelease: false
         omitName: true
+        omitBody: true
