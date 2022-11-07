@@ -31,7 +31,6 @@ jobs:
     - name: Store artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: tarball
         path: releases/*.tgz
           
     - name: Release
@@ -39,4 +38,5 @@ jobs:
       with:
         artifacts: "releases/*.tgz"
         tag: nightly-${{ github.sha }}
-        prerelease: true
+        prerelease: false
+        replacesArtifacts: false
