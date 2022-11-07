@@ -29,11 +29,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: tarball
-          path: releases/*.gz
+        path: releases/*.tgz
           
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "releases/*.t?gz"
-        commit: ${{ needs.setup_release.outputs.release_commit }}
+        artifacts: "releases/*.tgz"
+        tag: ${{ needs.setup_release.outputs.release_commit }}
         prerelease: true
