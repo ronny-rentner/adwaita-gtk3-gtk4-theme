@@ -36,3 +36,4 @@ jobs:
         artifacts: "releases/*.tgz"
         tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
         prerelease: false
+        omitName: true
