@@ -38,3 +38,4 @@ jobs:
         tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
         prerelease: false
         omitBody: true
+        artifactErrorsFailBuild: true
