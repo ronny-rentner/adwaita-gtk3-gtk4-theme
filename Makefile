@@ -39,7 +39,7 @@ gtk4patch:
 	echo "@import 'defaults-light.css';\n" |cat - ${GTK4_PATCH_SRC_DIR}/base.css >${GTK4_PATCH_DIR}/gtk.css
 	#dark
 	mkdir -p ${GTK4_DARK_PATCH_DIR}
-	cp ${GTK4_PATCH_SRC_DIR}/defaults-dark.css ${GTK4_PATCH_DIR}
+	cp ${GTK4_PATCH_SRC_DIR}/defaults-dark.css ${GTK4_DARK_PATCH_DIR}
 	cp -R ${GTK4_ASSETS_DIR} ${GTK4_DARK_PATCH_DIR}
 	echo "@import 'defaults-dark.css';\n" |cat - ${GTK4_PATCH_SRC_DIR}/base.css >${GTK4_DARK_PATCH_DIR}/gtk.css
 
