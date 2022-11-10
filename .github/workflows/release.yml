@@ -39,3 +39,5 @@ jobs:
         prerelease: false
         omitBody: true
         artifactErrorsFailBuild: true
+        allowUpdates: true
+        replacesArtifacts: true
