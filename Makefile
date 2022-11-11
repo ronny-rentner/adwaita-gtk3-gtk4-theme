@@ -58,6 +58,7 @@ debian:
 		echo " $${f} `dirname /usr/$${f:$${LEN}}`" >>${DEBIAN_CONTROL}
 	done
 	equivs-build ${DEBIAN_CONTROL}
+	mkdir -p ${RELEASE_DIR}
 	cp *.deb ${RELEASE_DIR}
 	cd ${DIR}
 
