@@ -2,7 +2,7 @@ name: Build and release workflow
 
 on:
   push:
-    branches: [ "main" ]
+#    branches: [ "main" ]
 
 jobs:
   build:
@@ -31,6 +31,7 @@ jobs:
       run: ls -Rl releases target
 
     - name: Release
+      if: github.ref == 'refs/heads/main'
       uses: ncipollo/release-action@v1
       with:
         name: ${{ github.event.repository.name }}-${{ steps.date.outputs.date }}
