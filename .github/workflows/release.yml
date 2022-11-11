@@ -22,7 +22,7 @@ jobs:
         submodules: recursive
 
     - name: Install dependencies
-      run: sudo apt-get install -y ninja-build git meson sassc libvala-dev gobject-introspection libgtk-4-dev cmake valac gettext
+      run: sudo apt-get install -y ninja-build git meson sassc libvala-dev gobject-introspection libgtk-4-dev cmake valac gettext equivs
 
     - name: Build package
       run: make

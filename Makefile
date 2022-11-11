@@ -1,12 +1,12 @@
 .ONESHELL:
-.SHELLFLAGS += -e
+SHELL := /bin/bash
+.SHELLFLAGS += -O globstar -e
 
 DIR                  := ${CURDIR}
 BUILD_DIR            := ${DIR}/build
 TARGET_DIR           := ${DIR}/target
 TARGET_THEMES_DIR    := ${TARGET_DIR}/share/themes
 RELEASE_DIR          := ${DIR}/releases
-
 
 GTK4_DIR             := ${DIR}/libadwaita
 GTK4_BUILD_DIR       := ${GTK4_DIR}/_build
@@ -15,8 +15,11 @@ GTK4_PATCH_SRC_DIR   := ${GTK4_BUILD_DIR}/src/stylesheet
 GTK4_DARK_PATCH_DIR  := ${TARGET_THEMES_DIR}/adw-gtk3-dark/gtk-4.0
 GTK4_ASSETS_DIR      :=  ${GTK4_DIR}/src/stylesheet/assets
 
-.PHONY: all clean build gtk4build gtk4patch release
-all: clean build gtk4build gtk4patch release
+DEBIAN_DIR           := ${DIR}/debian
+DEBIAN_CONTROL       := ${DEBIAN_DIR}/control
+
+.PHONY: all clean build gtk4build gtk4patch debian release
+all: clean build gtk4build gtk4patch debian release
 
 update:
 	git pull
@@ -42,6 +45,21 @@ gtk4patch:
 	cp ${GTK4_PATCH_SRC_DIR}/defaults-dark.css ${GTK4_DARK_PATCH_DIR}
 	cp -R ${GTK4_ASSETS_DIR} ${GTK4_DARK_PATCH_DIR}
 	echo "@import 'defaults-dark.css';\n" |cat - ${GTK4_PATCH_SRC_DIR}/base.css >${GTK4_DARK_PATCH_DIR}/gtk.css
+
+debian:
+	mkdir -p ${BUILD_DIR}/debian
+	cd ${BUILD_DIR}/debian
+	cp ${DEBIAN_CONTROL}.in ${DEBIAN_CONTROL}
+	LEN=`echo ${TARGET_DIR} |wc -c`
+	for f in ${TARGET_DIR}/**; do
+		if [ -d $${f} ]; then
+			continue
+		fi
+		echo " $${f} `dirname /usr/$${f:$${LEN}}`" >>${DEBIAN_CONTROL}
+	done
+	equivs-build ${DEBIAN_CONTROL}
+	cp *.deb ${RELEASE_DIR}
+	cd ${DIR}
 
 release:
 	mkdir -p ${RELEASE_DIR}
