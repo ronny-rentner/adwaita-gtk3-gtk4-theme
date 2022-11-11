@@ -36,7 +36,7 @@ jobs:
         name: ${{ github.event.repository.name }}--nightly-${{ steps.date.outputs.date }}
         artifacts: "releases/*.tgz,releases/*.deb"
         tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
-        prerelease: true
+        prerelease: false
         omitBody: true
         artifactErrorsFailBuild: true
         allowUpdates: true

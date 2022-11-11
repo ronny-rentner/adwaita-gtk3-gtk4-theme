@@ -2,6 +2,8 @@
 SHELL := /bin/bash
 .SHELLFLAGS += -O globstar -e
 
+MAKEFLAGS += --always-make
+
 DIR                  := ${CURDIR}
 BUILD_DIR            := ${DIR}/build
 TARGET_DIR           := ${DIR}/target
@@ -18,7 +20,6 @@ GTK4_ASSETS_DIR      :=  ${GTK4_DIR}/src/stylesheet/assets
 DEBIAN_DIR           := ${DIR}/debian
 DEBIAN_CONTROL       := ${DEBIAN_DIR}/control
 
-.PHONY: all clean build gtk4build gtk4patch debian release
 all: clean build gtk4build gtk4patch debian release
 
 update:
@@ -50,6 +51,8 @@ debian:
 	mkdir -p ${BUILD_DIR}/debian
 	cd ${BUILD_DIR}/debian
 	cp ${DEBIAN_CONTROL}.in ${DEBIAN_CONTROL}
+	# Remove trailing newline character in control file
+	sed -i -z 's/\n$$//' ${DEBIAN_CONTROL}
 	LEN=`echo ${TARGET_DIR} |wc -c`
 	for f in ${TARGET_DIR}/**; do
 		if [ -d $${f} ]; then
@@ -67,9 +70,12 @@ release:
 	cd ${TARGET_THEMES_DIR}
 	tar -zcvf ${RELEASE_DIR}/adw-gtk3-gtk4-$$(date '+%Y-%m-%d').tgz *
 
-clean:  gtk4clean
+clean:  gtk4clean debianclean
 	rm -rf "${TARGET_DIR}"
 	rm -rf "${BUILD_DIR}"
 
 gtk4clean:
 	rm -rf ${DIR}/libadwaita/_build
+
+debianclean:
+	rm ${DEBIAN_CONTROL}
