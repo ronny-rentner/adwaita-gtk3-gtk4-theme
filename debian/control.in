@@ -7,7 +7,7 @@ Homepage: https://github.com/lassekongo83/adw-gtk3
 Standards-Version: 3.9.2
 
 Package: adwaita-gtk3-gtk4-theme
-Version: 2022-11-10.nightly
+Version: __VERSION__
 Maintainer: Ronny Rentner <debian.code@ronny-rentner.de>
 # Pre-Depends: <comma-separated list of packages>
 # Depends: <comma-separated list of packages>

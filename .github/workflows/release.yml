@@ -33,9 +33,9 @@ jobs:
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ github.event.repository.name }}--nightly-${{ steps.date.outputs.date }}
+        name: ${{ github.event.repository.name }}-${{ steps.date.outputs.date }}
         artifacts: "releases/*.tgz,releases/*.deb"
-        tag: nightly-${{ steps.date.outputs.date }}-${{ github.sha }}
+        tag: nightly-${{ steps.date.outputs.date }}
         prerelease: false
         omitBody: true
         artifactErrorsFailBuild: true

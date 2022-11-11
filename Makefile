@@ -9,6 +9,7 @@ BUILD_DIR            := ${DIR}/build
 TARGET_DIR           := ${DIR}/target
 TARGET_THEMES_DIR    := ${TARGET_DIR}/share/themes
 RELEASE_DIR          := ${DIR}/releases
+VERSION              := $(shell date +'%Y-%m-%d')
 
 GTK4_DIR             := ${DIR}/libadwaita
 GTK4_BUILD_DIR       := ${GTK4_DIR}/_build
@@ -19,6 +20,7 @@ GTK4_ASSETS_DIR      :=  ${GTK4_DIR}/src/stylesheet/assets
 
 DEBIAN_DIR           := ${DIR}/debian
 DEBIAN_CONTROL       := ${DEBIAN_DIR}/control
+DEBIAN_VERSION       := $(shell date +'%Y.%m.%d')
 
 all: clean build gtk4build gtk4patch debian release
 
@@ -53,6 +55,8 @@ debian: build gtk4build gtk4patch
 	cp ${DEBIAN_CONTROL}.in ${DEBIAN_CONTROL}
 	# Remove trailing newline character in control file
 	sed -i -z 's/\n$$//' ${DEBIAN_CONTROL}
+	sed -i -z 's/__VERSION__/${DEBIAN_VERSION}/' ${DEBIAN_CONTROL}
+	$(date +'%Y-%m-%d')
 	LEN=`echo ${TARGET_DIR} |wc -c`
 	for f in ${TARGET_DIR}/**; do
 		if [ -d $${f} ]; then
@@ -68,7 +72,7 @@ debian: build gtk4build gtk4patch
 release:
 	mkdir -p ${RELEASE_DIR}
 	cd ${TARGET_THEMES_DIR}
-	tar -zcvf ${RELEASE_DIR}/adw-gtk3-gtk4-$$(date '+%Y-%m-%d').tgz *
+	tar -zcvf ${RELEASE_DIR}/adw-gtk3-gtk4-${VERSION}.tgz *
 
 clean:  gtk4clean debianclean
 	rm -rf "${TARGET_DIR}"
