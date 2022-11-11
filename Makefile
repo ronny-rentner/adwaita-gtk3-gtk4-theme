@@ -78,4 +78,4 @@ gtk4clean:
 	rm -rf ${DIR}/libadwaita/_build
 
 debianclean:
-	rm ${DEBIAN_CONTROL}
+	rm -f ${DEBIAN_CONTROL}
