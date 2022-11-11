@@ -47,7 +47,7 @@ gtk4patch:
 	cp -R ${GTK4_ASSETS_DIR} ${GTK4_DARK_PATCH_DIR}
 	echo "@import 'defaults-dark.css';\n" |cat - ${GTK4_PATCH_SRC_DIR}/base.css >${GTK4_DARK_PATCH_DIR}/gtk.css
 
-debian:
+debian: build gtk4build gtk4patch
 	mkdir -p ${BUILD_DIR}/debian
 	cd ${BUILD_DIR}/debian
 	cp ${DEBIAN_CONTROL}.in ${DEBIAN_CONTROL}
