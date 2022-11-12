@@ -27,14 +27,13 @@ echo "BRANCHES=$BRANCH_MAPPING"
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-
+git branch -v
 
 git remote add upstream "$UPSTREAM_REPO"
 #git fetch upstream
 git fetch upstream "${BRANCH_MAPPING%%:*}"
 git remote -v
 
-git branch -v
 
 git rebase --autosquash --autostash "upstream/${BRANCH_MAPPING%%:*}"
 git push --force origin "${BRANCH_MAPPING#*:}"
