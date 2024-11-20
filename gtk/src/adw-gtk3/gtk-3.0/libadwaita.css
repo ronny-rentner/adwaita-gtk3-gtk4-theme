@@ -1246,6 +1246,8 @@ row > box.header > box.title, row > box.header > box.title > .title, row > box.h
 
 row > box.header > .prefixes, row > box.header > .suffixes { border-spacing: 6px; }
 
+row > box.header > .prefixes > .suffixes, row > box.header > .suffixes > .suffixes { border-spacing: 6px; }
+
 row > box.header > .icon:dir(ltr), row > box.header > .prefixes:dir(ltr) { margin-right: 6px; }
 
 row > box.header > .icon:dir(rtl), row > box.header > .prefixes:dir(rtl) { margin-left: 6px; }
@@ -2377,7 +2379,7 @@ gridview > child.activatable:selected:hover { background-color: color-mix(in srg
 
 gridview > child.activatable:selected:active { background-color: color-mix(in srgb, var(--accent-bg-color) 39%, transparent); }
 
-viewswitcher { border-spacing: 3px; }
+viewswitcher { border-spacing: 3px; min-height: 34px; }
 
 viewswitcher.narrow { margin-top: -3px; margin-bottom: -3px; min-height: 6px; }
 
